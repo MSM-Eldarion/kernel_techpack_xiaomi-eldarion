@@ -44,7 +44,6 @@
 #include <linux/of_gpio.h>
 #include <linux/regulator/consumer.h>
 #include <soc/qcom/scm.h>
-#include <linux/wakelock.h>
 
 #define FPC1020_RESET_LOW_US 1000
 #define FPC1020_RESET_HIGH1_US 100
@@ -65,7 +64,7 @@ typedef struct fpc1020_data {
 	struct input_dev *idev_wake;
 	char idev_name_wake[40];
 #else
-	struct wake_lock fpc_wake_lock;
+	struct wakeup_source fpc_wake_lock;
 	const char *wlock_name;
 	bool fpc_extend_wakelock;
 #endif
@@ -94,7 +93,7 @@ static irqreturn_t fpc1020_irq_handler(int irq, void *handle)
 	input_sync(fpc1020->idev_wake);
 #else
 	if (fpc1020->fpc_extend_wakelock) {
-		wake_lock_timeout(&fpc1020->fpc_wake_lock, HZ * 2);
+		__pm_wakeup_event(&fpc1020->fpc_wake_lock, HZ * 2);
 	}
 #endif
 #endif
@@ -464,8 +463,7 @@ static int fpc1020_probe(struct platform_device *pdev)
 #else
 	fpc1020->wlock_name = kasprintf(GFP_KERNEL,
 			"%s", "fpc1020_intr");
-	wake_lock_init(&fpc1020->fpc_wake_lock, WAKE_LOCK_SUSPEND,
-			fpc1020->wlock_name);
+	wakeup_source_init(&fpc1020->fpc_wake_lock, fpc1020->wlock_name);
 	fpc1020->fpc_extend_wakelock = 1;
 	fpc1020->is_gpio_enabled = false;
 #endif
@@ -489,7 +487,7 @@ static int fpc1020_remove(struct platform_device *pdev)
 	fpc1020_data_t *fpc1020 = dev_get_drvdata(&(pdev->dev));
 	fpc1020->fpc_extend_wakelock = 0;
 
-	wake_lock_destroy(&fpc1020->fpc_wake_lock);
+	wakeup_source_trash(&fpc1020->fpc_wake_lock);
 #endif
 
 	return 0;
