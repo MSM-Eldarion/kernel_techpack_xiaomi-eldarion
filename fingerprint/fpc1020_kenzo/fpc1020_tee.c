@@ -31,6 +31,7 @@
  * as published by the Free Software Foundation.
  */
 
+#include <linux/atomic.h>
 #include <linux/clk.h>
 #include <linux/delay.h>
 #include <linux/gpio.h>
@@ -66,7 +67,7 @@ typedef struct fpc1020_data {
 #else
 	struct wakeup_source *fpc_wake_lock;
 	const char *wlock_name;
-	bool fpc_extend_wakelock;
+	atomic_t fpc_extend_wakelock;
 #endif
 
 #endif
@@ -92,7 +93,7 @@ static irqreturn_t fpc1020_irq_handler(int irq, void *handle)
 	input_report_key(fpc1020->idev_wake, 0x222, 0);
 	input_sync(fpc1020->idev_wake);
 #else
-	if (fpc1020->fpc_extend_wakelock) {
+	if (atomic_read(&fpc1020->fpc_extend_wakelock)) {
 		__pm_wakeup_event(fpc1020->fpc_wake_lock, HZ * 2);
 	}
 #endif
@@ -229,7 +230,7 @@ static int fpc1020_suspend(struct device *dev)
 	dev_info(fpc1020->dev, "%s\n", __func__);
 	if (device_may_wakeup(fpc1020->dev)) {
 #ifdef WAKEUP_DEVICE
-		fpc1020->fpc_extend_wakelock = 1;
+		atomic_set(&fpc1020->fpc_extend_wakelock, 1);
 #endif
 		enable_irq_wake(gpio_to_irq(fpc1020->irq_gpio));
 	}
@@ -464,7 +465,7 @@ static int fpc1020_probe(struct platform_device *pdev)
 	fpc1020->wlock_name = kasprintf(GFP_KERNEL,
 			"%s", "fpc1020_intr");
 	fpc1020->fpc_wake_lock = wakeup_source_register(NULL, fpc1020->wlock_name);
-	fpc1020->fpc_extend_wakelock = 1;
+	atomic_set(&fpc1020->fpc_extend_wakelock, 1);
 	fpc1020->is_gpio_enabled = false;
 #endif
 #endif
@@ -485,7 +486,7 @@ static int fpc1020_remove(struct platform_device *pdev)
 
 #ifdef WAKEUP_DEVICE
 	fpc1020_data_t *fpc1020 = dev_get_drvdata(&(pdev->dev));
-	fpc1020->fpc_extend_wakelock = 0;
+	atomic_set(&fpc1020->fpc_extend_wakelock, 0);
 
 	wakeup_source_unregister(fpc1020->fpc_wake_lock);
 #endif
