@@ -1,1 +1,1 @@
-obj-$(CONFIG_IR_PWM) += pwm-ir.o
+obj-$(CONFIG_IR_PWM_MI8953) += pwm-ir.o
