@@ -7,6 +7,15 @@ config LEDS_QPNP
 	  LEDs in both PWM and light pattern generator (LPG) modes.  For older
 	  PMICs, it also supports WLEDs and flash LEDs.
 
+config LEDS_QPNP_WLED
+	tristate "Support for QPNP WLED"
+	depends on LEDS_CLASS && MFD_SPMI_PMIC
+	help
+	  This driver supports the WLED (White LED) functionality of Qualcomm
+	  Technologies, Inc. QPNP PMICs.  WLED is used for LCD backlight with
+	  variable brightness.  It also supports outputting the Avdd supply for
+	  AMOLED displays.
+
 config QPNP_COINCELL
 	tristate "QPNP coincell charger support"
 	depends on SPMI
