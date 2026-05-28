@@ -44,3 +44,7 @@
 	status = "okay";
 };
 
+&usb_otg {
+	extcon = <&qpnp_smbcharger>;
+};
+
