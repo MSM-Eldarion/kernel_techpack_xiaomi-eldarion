@@ -25,7 +25,7 @@
 #include <linux/irq.h>
 #include <linux/err.h>
 #include <linux/delay.h>
-#include <msm-titanium/leds-qpnp-wled.h>
+#include <msm-eldarion/leds-qpnp-wled.h>
 #include <linux/qpnp/qpnp-revid.h>
 
 /* base addresses */
