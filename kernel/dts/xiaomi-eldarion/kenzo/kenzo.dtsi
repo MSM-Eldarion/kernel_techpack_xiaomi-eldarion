@@ -3,3 +3,4 @@
 #include "battery.dtsi"
 #include "pmic.dtsi"
 #include "misc.dtsi"
+#include "fingerprint.dtsi"
