@@ -1,2 +1,3 @@
 #include "android.dtsi"
 #include "haptic.dtsi"
+#include "ramoops.dtsi"
