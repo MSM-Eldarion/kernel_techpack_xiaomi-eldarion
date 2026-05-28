@@ -6,3 +6,13 @@ config LEDS_QPNP
 	  Inc. QPNP PMICs.  It primarily supports controlling tri-color RGB
 	  LEDs in both PWM and light pattern generator (LPG) modes.  For older
 	  PMICs, it also supports WLEDs and flash LEDs.
+
+config QPNP_COINCELL
+	tristate "QPNP coincell charger support"
+	depends on SPMI
+	help
+	  This driver supports the QPNP coincell peripheral found inside of
+	  Qualcomm Technologies, Inc. QPNP PMIC devices.  The coincell charger
+	  provides a means to charge a coincell battery or backup capacitor
+	  which is used to maintain PMIC register state when the main battery is
+	  removed from the mobile device.
