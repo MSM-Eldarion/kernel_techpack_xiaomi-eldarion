@@ -1,0 +1,5 @@
+menu "Fingerprint"
+
+source "techpack/xiaomi-eldarion/fingerprint/gf318m_kenzo/Kconfig"
+
+endmenu

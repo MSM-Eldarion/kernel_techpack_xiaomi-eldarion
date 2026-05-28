@@ -1,0 +1,1 @@
+obj-$(CONFIG_FINGERPRINT_GF318M_KENZO) += gf318m_kenzo/
