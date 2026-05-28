@@ -1,0 +1,15 @@
+#include "../common/panel/dsi-panel-tianma-nt35596-1080p-video.dtsi"
+#include "../common/panel/dsi-panel-boe-nt35532-1080p-video.dtsi"
+#include "../common/panel/dsi-panel-sharp-r63315-1080p-video.dtsi"
+
+&dsi_boe_nt35532_1080_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_sharp_r63315_1080_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_tianma_nt35596_1080_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
