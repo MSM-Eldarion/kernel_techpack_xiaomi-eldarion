@@ -1,0 +1,5 @@
+source "techpack/xiaomi-eldarion/pmic/Kconfig"
+source "techpack/xiaomi-eldarion/touchscreen/Kconfig"
+source "techpack/xiaomi-eldarion/ir/Kconfig"
+source "techpack/xiaomi-eldarion/leds/Kconfig"
+source "techpack/xiaomi-eldarion/fingerprint/Kconfig"
