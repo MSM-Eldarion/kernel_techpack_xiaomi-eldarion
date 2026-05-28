@@ -1,3 +1,5 @@
+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+
 &spmi_bus {
 	qcom,pmi8950@2 {
 		qcom,leds@a100 {
@@ -18,5 +20,32 @@
 				qcom,mode-ctrl = <0x60>;
 			};
 		};
+
+		pmi8950_gpios: gpios {
+			pinctrl-names = "default";
+			pinctrl-0 = <&pwm_ir_default>;
+
+			pwm_ir_default: pmi8950_gpio1 {
+				status = "okay";
+				pins = "gpio1";
+				output-low;
+				bias-pull-down;
+				function = "func1";
+				qcom,drive-strength = <PMIC_GPIO_STRENGTH_MED>;
+			};
+		};
 	};
+};
+
+&pmi8950_pwm {
+	status = "okay";
+};
+
+&soc {
+	pwm_ir {
+    	compatible = "pwm-ir-mi8953";
+        pwms = <&pmi8950_pwm 0 0>;
+        reg-id = "vdd";
+        vdd-supply = <&pm8950_l10>;
+    };
 };
