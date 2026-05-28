@@ -1,0 +1,9 @@
+/{
+	mtp_batterydata: qcom,battery-data {
+		qcom,batt-id-range-pct = <15>;
+		#include "../common/batterydata/batterydata-coslight-4000mah-4400mv.dtsi"
+		#include "../common/batterydata/batterydata-coslight-4000mah-4400mv-10k.dtsi"
+		#include "../common/batterydata/batterydata-sunwoda-4000mah-4400mv.dtsi"
+		#include "../common/batterydata/batterydata-scud-4000mah-4400mv.dtsi"
+	};
+};
