@@ -35,6 +35,11 @@
 			};
 		};
 	};
+    qcom,pmi8950@3 {
+		labibb: qpnp-labibb-regulator {
+			status = "ok";
+		};
+	};
 };
 
 &pmi8950_pwm {
