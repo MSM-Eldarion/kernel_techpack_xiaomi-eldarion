@@ -1,8 +1,8 @@
 &soc {
     fpc_fpc1020 {
 		compatible = "fpc,fpc1020";
-		fpc,reset_gpio = <&msm_gpio 110 0>;
-		fpc,irq_gpio = <&msm_gpio 106 0>;
+		fpc,reset_gpio = <&tlmm 110 0>;
+		fpc,irq_gpio = <&tlmm 106 0>;
 		fpc,irq_flags = <0x2001>;
 		fpc,event-type = <4>;
 		fpc,event-code = <4>;
@@ -18,9 +18,8 @@
 		vdd_ana-supply  = <&pm8950_l10>;
 		vdd_io-supply   = <&pm8950_l10>;
 
-		goodix,gpio_reset =<&msm_gpio 110 0>;
-		goodix,gpio_irq = <&msm_gpio 106 0>;
-		goodix,gpio_pwr = <&msm_gpio 119 0>;
-
+		goodix,gpio_reset =<&tlmm 110 0>;
+		goodix,gpio_irq = <&tlmm 106 0>;
+		goodix,gpio_pwr = <&tlmm 119 0>;
 	};
 };
